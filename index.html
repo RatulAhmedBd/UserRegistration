@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<title>Registration</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+	</script>
+	<style>
+		body{
+			font-family: 'Roboto', sans-serif;
+			font-weight: 300;
+		}
+		label{
+			font-family: 'Roboto', sans-serif;
+			font-weight: 300;
+		}
+	</style>
+</head>
+<div class="navbar navbar-default">
+		<div class="navbar-header">
+			<button class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+				<a href="#" class="navbar-brand">Login & Registration</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="login.html">Login</a></li>
+				<li><a href="regestration.html">Registration</a></li>
+			</ul>
+		</div>
+		</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2">
+						<div class="panel panel-default">
+							<div class="panel-heading">Registration</div>
+								<div class="panel-body">
+									<form action="" class="form-horizontal" method="post">
+										<div class="form-group">
+											<label for="username" class="col-sm-4 control-label">Your Username</label>
+											<div class="col-sm-6">	
+												<input class="form-control" type="text" name="user" id="user" placeholder="Enter your username">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="email" class="col-sm-4 control-label">Your email</label>
+											<div class="col-sm-6">	
+												<input class="form-control" type="email" name="email" id="email" placeholder="Enter your Email">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="password" class="col-sm-4 control-label">Your password</label>
+											<div class="col-sm-6">	
+												<input class="form-control" type="password" name="pass" id="password" placeholder="Enter your password">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="confirm_password" class="col-sm-4 control-label">Your confirm_password</label>
+											<div class="col-sm-6">	
+												<input class="form-control" type="password" name="confirm_pass" id="confirm_pass" placeholder="Enter your confirm password">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-6 col-sm-offset-4">	
+												<input type="submit" name="submit" id="submit" class="btn btn-primary">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>		
+					</div>
+				</div>		
+	<?php
+	if(isset($_POST["submit"])){
+
+	if(!empty($_POST['user']) && !empty($_POST['pass'])) {
+		$user=$_POST['user'];
+		$email=$_POST['email'];
+		$pass=$_POST['pass'];
+		$confirm_pass=$_POST['confirm_pass'];
+		
+
+		$con=mysql_connect('localhost','root','') or die(mysql_error());
+		mysql_select_db('user_registration') or die("cannot select DB");
+
+		$query=mysql_query("SELECT * FROM login WHERE username='".$user."'");
+		$numrows=mysql_num_rows($query);
+		if($numrows==0)
+		{
+		$sql="INSERT INTO login(username,email,password,confirm_pass) VALUES('$user','$email','$pass','$confirm_pass')";
+
+		$result=mysql_query($sql);
+
+
+		if($result){
+		echo "Account Successfully Created";
+		} else {
+		echo "Failure!";
+		}
+
+		} else {
+		echo "That username already exists! Please try again with another.";
+		}
+
+	} else {
+		echo "All fields are required!";
+	}
+	}
+	?>
+
+	</body>
+	</html>
